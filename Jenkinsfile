@@ -1,39 +1,37 @@
 pipeline {
   agent any
+
+  environment {
+    VSTEST_EXE = '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe"'
+  }
+
   stages {
 
     stage('Clone') {
       steps {
-        echo 'Cloning source code'
+        echo 'Cloning source code...'
         git branch: 'master', url: 'https://github.com/SpringMuch/WebBanHangOnline'
-      }
-    }
-
-    stage('Restore Packages') {
-      steps {
-        echo 'Restoring packages...'
-        bat 'dotnet restore'
       }
     }
 
     stage('Build') {
       steps {
-        echo 'Building project...'
+        echo 'Building ASP.NET project using MSBuild...'
         bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline.sln /p:Configuration=Release'
       }
     }
 
-    stage('Tests') {
+    stage('Test') {
       steps {
-        echo 'Running tests...'
-        bat 'dotnet test --no-build --verbosity normal || echo No tests or build failed.'
+        echo 'Running unit tests using vstest.console.exe...'
+        bat '${VSTEST_EXE} "WebBanHangOnline.Tests\\bin\\Release\\WebBanHangOnline.Tests.dll" || echo No tests found or execution failed.'
       }
     }
 
     stage('Publish to Folder') {
       steps {
-        echo 'Publishing to ./publish...'
-        bat 'dotnet publish -c Release -o ./publish'
+        echo 'Publishing project to ./publish...'
+        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline.csproj /p:DeployOnBuild=true /p:OutputPath=publish /p:Configuration=Release'
       }
     }
 
@@ -46,6 +44,7 @@ pipeline {
 
     stage('Deploy to IIS') {
       steps {
+        echo 'Deploying to IIS...'
         powershell '''
           Import-Module WebAdministration
           if (-not (Test-Path IIS:\\Sites\\MySite)) {
