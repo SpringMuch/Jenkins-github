@@ -24,9 +24,12 @@ pipeline {
       }
     }
     
-    stage('Test') {
+    stage('Tests') {
       steps {
-        echo 'Running unit tests using vstest.console.exe...'
+        echo 'Building test project...'
+        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline.Tests\\WebBanHangOnline.Tests.csproj /p:Configuration=Release'
+
+        echo 'Running unit tests...'
         bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" "WebBanHangOnline.Tests\\bin\\Release\\WebBanHangOnline.Tests.dll" || echo No tests found or execution failed.'
       }
     }
