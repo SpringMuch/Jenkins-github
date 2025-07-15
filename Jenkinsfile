@@ -34,7 +34,7 @@ pipeline {
     stage('Publish to Folder') {
       steps {
         echo 'Publishing project to ./publish...'
-        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline\\WebBanHangOnline\\WebBanHangOnline.csproj /p:DeployOnBuild=true /p:OutputPath=publish /p:Configuration=Release'
+        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline\\WebBanHangOnline.csproj /p:DeployOnBuild=true /p:OutputPath=publish /p:Configuration=Release'
       }
     }
 
