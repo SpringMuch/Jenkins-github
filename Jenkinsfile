@@ -53,14 +53,13 @@ pipeline {
 
     stage('Deploy to IIS') {
       steps {
-        echo 'Deploying to IIS...'
         powershell '''
-          Import-Module WebAdministration
-          if (-not (Test-Path IIS:\\Sites\\MySite)) {
-            New-Website -Name "MySite" -Port 81 -PhysicalPath "C:\\wwwroot\\myproject"
-          } else {
-            Restart-WebAppPool -Name "DefaultAppPool"
-          }
+        Import-Module WebAdministration
+        if (-not (Test-Path IIS:\\Sites\\MySite)) {
+          New-Website -Name "MySite" -Port 81 -PhysicalPath "C:\\wwwroot\\myproject"
+        } else {
+          Restart-WebAppPool -Name "DefaultAppPool"
+        }
         '''
       }
     }
