@@ -24,13 +24,10 @@ pipeline {
       }
     }
     
-    stage('Tests') {
+    stage('Run Tests') {
       steps {
-        echo 'Building test project...'
-        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" WebBanHangOnline.Tests\\WebBanHangOnline.Tests.csproj /p:Configuration=Release'
-
         echo 'Running unit tests...'
-        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" "WebBanHangOnline.Tests\\bin\\Release\\WebBanHangOnline.Tests.dll" || echo No tests found or execution failed.'
+        bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" "WebBanHangOnline.Tests\\bin\\Release\\net9.0\\WebBanHangOnline.Tests.dll" || echo No tests found or execution failed.'
       }
     }
 
