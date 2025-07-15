@@ -38,7 +38,12 @@ pipeline {
       }
     }
 
-
+    stage('Debug Directory') {
+      steps {
+        echo 'Listing current directory...'
+        bat 'cd && dir /s /b publish'
+      }
+    }
     stage('Copy to IIS Folder') {
       steps {
         echo 'Copying to C:\\wwwroot\\myproject...'
