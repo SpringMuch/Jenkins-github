@@ -42,7 +42,7 @@ pipeline {
     stage('Copy to IIS Folder') {
       steps {
         echo 'Copying to C:\\wwwroot\\myproject...'
-        bat 'xcopy "WebBanHangOnline\\WebBanHangOnline\\publish" "C:\\wwwroot\\myproject" /E /Y /I /R'
+        bat 'xcopy "publish" "C:\\wwwroot\\myproject" /E /Y /I /R'
       }
     }
 
