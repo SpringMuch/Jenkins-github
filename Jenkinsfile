@@ -4,7 +4,7 @@ pipeline {
     stage('clone'){
 		  steps {
 			  echo 'Cloning source code'
-			  git branch:'main', url: 'https://github.com/SpringMuch/WebBanHangOnline'
+			  git branch:'master', url: 'https://github.com/SpringMuch/WebBanHangOnline'
 		  }
 	  }
     stage('restore package') {
